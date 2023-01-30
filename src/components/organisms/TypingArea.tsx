@@ -6,23 +6,13 @@ import { NowTypingText } from "../molecules/NowTypingText"
 
 type Props = {
   isFinished: boolean,
-  correctTypeAmount: number,
-  allTypeAmount: number,
   setIsFinished: (isFinished: boolean) => void
-  setCorrectTypeAmount: (correctTypeAmount: number) => void
-  setAllTypeAmount: (allTypeAmount: number) => void
+  setCorrectTypeAmount: (correctTypeAmount: React.SetStateAction<number>) => void
+  setAllTypeAmount: (allTypeAmount: React.SetStateAction<number>) => void
   setTypingDuration: (typingDuration: number) => void
 }
 
-export const TypingArea: React.FC<Props> = ({
-  isFinished,
-  setIsFinished,
-  correctTypeAmount,
-  setCorrectTypeAmount,
-  allTypeAmount,
-  setAllTypeAmount,
-  setTypingDuration
-}) => {
+export const TypingArea: React.FC<Props> = ({...props}) => {
   const toTypeText = "type this text"
   const typeTextLength = toTypeText.length
   
@@ -35,21 +25,21 @@ export const TypingArea: React.FC<Props> = ({
   const timerRef = useRef<number>(0)
 
   const handleKeyInput = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (isFinished) return
+    if (props.isFinished) return
     if (!isStarted) {
       setIsStarted(true)
       const startTime = new Date().getTime()
       timerRef.current = setInterval(() => {
-        setTypingDuration(new Date().getTime() - startTime)
+        props.setTypingDuration(new Date().getTime() - startTime)
       }, 10)
     }
-    setAllTypeAmount(allTypeAmount + 1)
+    props.setAllTypeAmount(prevAllTypeAmount => prevAllTypeAmount + 1)
     if (e.key === toTypeText[currentIndex]) {
       setIsMissed(false)
-      setCurrentIndex(currentIndex + 1)
-      setCorrectTypeAmount(correctTypeAmount + 1)
+      setCurrentIndex(prevCurrentIndex => prevCurrentIndex + 1)
+      props.setCorrectTypeAmount(prevCorrectTypeAmount=> prevCorrectTypeAmount + 1)
       if (currentIndex + 1 >= typeTextLength) {
-        setIsFinished(true)
+        props.setIsFinished(true)
         clearInterval(timerRef.current)
       }
     } else {

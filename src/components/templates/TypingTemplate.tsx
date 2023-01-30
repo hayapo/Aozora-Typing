@@ -31,9 +31,7 @@ export const TypingTemplate: React.FC = () => {
         < TypingArea
           isFinished = { isFinished }
           setIsFinished = { setIsFinished }
-          correctTypeAmount = { correctTypeAmount }
           setCorrectTypeAmount = { setCorrectTypeAmount }
-          allTypeAmount = { allTypeAmount }
           setAllTypeAmount = { setAllTypeAmount }
           setTypingDuration = { setTypingDuration }
         />
