@@ -1,4 +1,4 @@
-import { TypingText } from "../atoms/TypingText"
+import { Text } from "../atoms/Text"
 
 type Props = {
   yetTypedText: string
@@ -7,7 +7,7 @@ type Props = {
 export const YetTypedText: React.FC<Props> = ({ yetTypedText }) => {
   return (
     <span className="text-gray-400">
-      <TypingText typingText={yetTypedText}/>
+      <Text text={yetTypedText}/>
     </span>
   )
 }

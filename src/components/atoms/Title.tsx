@@ -4,7 +4,7 @@ type Props = {
 
 export const Title: React.FC<Props> = ({ titleText }) => {
   return (
-    <div className="text-4xl">
+    <div className="text-6xl">
       {titleText}
     </div>
   )

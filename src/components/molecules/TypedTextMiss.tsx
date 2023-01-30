@@ -1,4 +1,4 @@
-import { TypingText } from "../atoms/TypingText"
+import { Text } from "../atoms/Text"
 
 type Props = {
   typedTextMiss: string
@@ -6,8 +6,8 @@ type Props = {
 
 export const TypedTextMiss: React.FC<Props> = ({ typedTextMiss }) => {
   return (
-    <span id="textbox" className="text-red-400">
-      <TypingText typingText={typedTextMiss}/>
+    <span id="textbox" className="bg-gray-400 text-4xl text-red-400 ">
+      <Text text={typedTextMiss}/>
     </span>
   )
 }

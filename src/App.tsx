@@ -1,12 +1,12 @@
-import { TypingArea } from "./components/organisms/TypingArea"
+import { TypingTemplate } from "./components/templates/TypingTemplate"
 import { Title } from "./components/atoms/Title"
 
 function App() {
   const siteTitle= "Aozora Typing"
   return (
-    <div>
+    <div className="min-w-full">
       <Title titleText={siteTitle}/>
-      <TypingArea />
+      <TypingTemplate />
     </div>
   )
 }

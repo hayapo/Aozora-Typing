@@ -4,23 +4,44 @@ import { TypedTextMiss } from "../molecules/TypedTextMiss"
 import { YetTypedText } from "../molecules/YetTypedText"
 import { NowTypingText } from "../molecules/NowTypingText"
 
-export const TypingArea: React.FC = () => {
+type Props = {
+  isFinished: boolean,
+  correctTypeAmount: number,
+  allTypeAmount: number,
+  setIsFinished: (isFinished: boolean) => void
+  setCorrectTypeAmount: (correctTypeAmount: number) => void
+  setAllTypeAmount: (allTypeAmount: number) => void
+  setTypingDuration: (typingDuration: number) => void
+}
+
+export const TypingArea: React.FC<Props> = ({
+  isFinished,
+  setIsFinished,
+  correctTypeAmount,
+  setCorrectTypeAmount,
+  allTypeAmount,
+  setAllTypeAmount,
+  setTypingDuration
+}) => {
   const toTypeText = "type this text"
   const typeTextLength = toTypeText.length
   
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [correctTypeAmount, setCorrectTypeAmount] = useState(0)
-  const [allTypeAmount, setAllTypeAmount] = useState(0)
+  
   const [isStarted, setIsStarted] = useState(false)
-  const accuracyRate = (correctTypeAmount / allTypeAmount) * 100
 
   const [isMissed, setIsMissed] = useState(false)
-  const [isFinished, setIsFinished] = useState(false)
+
+  const timerRef = useRef<number>(0)
 
   const handleKeyInput = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (isFinished) return
     if (!isStarted) {
       setIsStarted(true)
+      const startTime = new Date().getTime()
+      timerRef.current = setInterval(() => {
+        setTypingDuration(new Date().getTime() - startTime)
+      }, 10)
     }
     setAllTypeAmount(allTypeAmount + 1)
     if (e.key === toTypeText[currentIndex]) {
@@ -29,6 +50,7 @@ export const TypingArea: React.FC = () => {
       setCorrectTypeAmount(correctTypeAmount + 1)
       if (currentIndex + 1 >= typeTextLength) {
         setIsFinished(true)
+        clearInterval(timerRef.current)
       }
     } else {
       setIsMissed(true)
@@ -37,7 +59,7 @@ export const TypingArea: React.FC = () => {
 
   return (
     <>
-      <div tabIndex={0} onKeyDown={(e) => handleKeyInput(e)} className="outline-none">
+      <div tabIndex={0} onKeyDown={(e) => handleKeyInput(e)} className="inline outline-none">
         <TypedTextCorrect typedTextCorrect={toTypeText.slice(0,currentIndex)} />
         { isMissed ? (
           <TypedTextMiss typedTextMiss={toTypeText[currentIndex]} />
