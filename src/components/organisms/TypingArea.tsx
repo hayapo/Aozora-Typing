@@ -3,6 +3,7 @@ import { TypedTextCorrect } from "../molecules/TypedTextCorrect"
 import { TypedTextMiss } from "../molecules/TypedTextMiss"
 import { YetTypedText } from "../molecules/YetTypedText"
 import { NowTypingText } from "../molecules/NowTypingText"
+import { typingData } from "../../util/lib/typingData"
 
 type Props = {
   isFinished: boolean,
@@ -13,15 +14,23 @@ type Props = {
 }
 
 export const TypingArea: React.FC<Props> = ({...props}) => {
-  const toTypeText = "type this text"
-  const typeTextLength = toTypeText.length
   
   const [currentIndex, setCurrentIndex] = useState(0)
   
   const [isStarted, setIsStarted] = useState(false)
-
+  
   const [isMissed, setIsMissed] = useState(false)
+  
+  const typeData = typingData[1]
+  
+  const toTypeText = typeData.wakatiRomajiText
+  
+  const typeTextLength = toTypeText.length
 
+  const textSplitByLine = toTypeText.split(".").slice(0, -1)
+
+  const textSplitByLetter = textSplitByLine.map((line) => line.split(" ").filter(Boolean))
+  
   const timerRef = useRef<number>(0)
 
   const handleKeyInput = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -48,8 +57,8 @@ export const TypingArea: React.FC<Props> = ({...props}) => {
   }
 
   return (
-    <>
-      <div tabIndex={0} onKeyDown={(e) => handleKeyInput(e)} className="inline outline-none">
+    <div>
+      <div tabIndex={0} onKeyDown={(e) => handleKeyInput(e)} className="outline-none">
         <TypedTextCorrect typedTextCorrect={toTypeText.slice(0,currentIndex)} />
         { isMissed ? (
           <TypedTextMiss typedTextMiss={toTypeText[currentIndex]} />
@@ -59,6 +68,6 @@ export const TypingArea: React.FC<Props> = ({...props}) => {
         }
         <YetTypedText yetTypedText={toTypeText.slice(currentIndex + 1, toTypeText.length)} />
       </div>
-    </>
+    </div>
   )
 }
