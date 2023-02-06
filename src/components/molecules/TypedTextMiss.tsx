@@ -6,8 +6,8 @@ type Props = {
 
 export const TypedTextMiss: React.FC<Props> = ({ typedTextMiss }) => {
   return (
-    <span id="textbox" className="bg-gray-400 text-4xl text-red-400 ">
+    <div id="textbox" className="inline bg-gray-400 text-4xl text-red-400 ">
       <Text text={typedTextMiss}/>
-    </span>
+    </div>
   )
 }

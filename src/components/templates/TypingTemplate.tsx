@@ -11,7 +11,7 @@ export const TypingTemplate: React.FC = () => {
   const accuracyRate = Math.floor(correctTypeAmount/allTypeAmount * 100)
   
   return (
-    <div className="my-10">
+    <div>
       {isFinished ? (
         <div>
           <div>

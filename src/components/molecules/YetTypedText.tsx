@@ -6,8 +6,8 @@ type Props = {
 
 export const YetTypedText: React.FC<Props> = ({ yetTypedText }) => {
   return (
-    <span className="text-gray-400">
+    <div className="inline text-gray-400">
       <Text text={yetTypedText}/>
-    </span>
+    </div>
   )
 }
