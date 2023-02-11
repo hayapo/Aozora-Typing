@@ -11,5 +11,4 @@ body {
   @apply m-0;
   @apply flex;
   @apply place-content-center;
-  @apply min-w-[320px];
 }

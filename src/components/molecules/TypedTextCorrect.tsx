@@ -6,8 +6,8 @@ type Props = {
 
 export const TypedTextCorrect: React.FC<Props> = ({ typedTextCorrect }) => {
   return (
-    <span id='textbox' className="text-green-400" >
+    <div id='textbox' className="inline text-green-400" >
       <Text text={typedTextCorrect}/>
-    </span>
+    </div>
   )
 }

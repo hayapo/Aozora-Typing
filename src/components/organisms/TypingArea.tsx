@@ -1,9 +1,9 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { TypedTextCorrect } from "../molecules/TypedTextCorrect"
 import { TypedTextMiss } from "../molecules/TypedTextMiss"
 import { YetTypedText } from "../molecules/YetTypedText"
 import { NowTypingText } from "../molecules/NowTypingText"
-import { typingData } from "../../util/lib/typingData"
+import { typingData } from "../../typingtexts/typingData"
 
 type Props = {
   isFinished: boolean,
@@ -14,24 +14,29 @@ type Props = {
 }
 
 export const TypingArea: React.FC<Props> = ({...props}) => {
-  
-  const [currentIndex, setCurrentIndex] = useState(0)
-  
+  const [currentLine, setCurrentLine] = useState(0)
+  const [currentLetterIndex, setCurrentLetterIndex] = useState(0)
+  const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0)
+  const [currentInlineIndex, setCurrentInlineIndex] = useState(0)
+  const [currentDisplayIndex, setCurrentDisplayIndex] = useState(0)
+  const [currentDataIndex, setCurrentDataIndex] = useState(0)
   const [isStarted, setIsStarted] = useState(false)
-  
   const [isMissed, setIsMissed] = useState(false)
-  
-  const typeData = typingData[1]
-  
-  const toTypeText = typeData.wakatiRomajiText
-  
-  const typeTextLength = toTypeText.length
 
-  const textSplitByLine = toTypeText.split(".").slice(0, -1)
+  const timerRef = useRef<number>(0)
 
+  useEffect(() => {
+    setCurrentDataIndex(Math.floor(Math.random() * typingData.length))
+  },[currentDataIndex])
+  
+  const typeData = typingData[currentDataIndex]
+  
+  const typeText = typeData.wakatiRomajiText
+  const textSplitByLine = typeText.split(".").slice(0,-1).map((line) => line[0] === " " ? line.slice(1,-1) : line.slice(0,-1))
   const textSplitByLetter = textSplitByLine.map((line) => line.split(" ").filter(Boolean))
   
-  const timerRef = useRef<number>(0)
+  const displayText = typeData.kanjiText
+  const displayTextSplitByLine = displayText.split("。").slice(0,-1)
 
   const handleKeyInput = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (props.isFinished) return
@@ -42,14 +47,39 @@ export const TypingArea: React.FC<Props> = ({...props}) => {
         props.setTypingDuration(new Date().getTime() - startTime)
       }, 10)
     }
-    props.setAllTypeAmount(prevAllTypeAmount => prevAllTypeAmount + 1)
-    if (e.key === toTypeText[currentIndex]) {
+
+    props.setAllTypeAmount(prevState => prevState + 1)
+    
+    if (e.key === textSplitByLetter[currentLine][currentLetterIndex][currentAlphabetIndex]) {
       setIsMissed(false)
-      setCurrentIndex(prevCurrentIndex => prevCurrentIndex + 1)
-      props.setCorrectTypeAmount(prevCorrectTypeAmount=> prevCorrectTypeAmount + 1)
-      if (currentIndex + 1 >= typeTextLength) {
-        props.setIsFinished(true)
-        clearInterval(timerRef.current)
+      setCurrentAlphabetIndex(prevState => prevState + 1)
+      setCurrentInlineIndex(prevState => prevState + 1)
+      props.setCorrectTypeAmount(prevState => prevState + 1)
+
+      if (currentAlphabetIndex + 1 >= textSplitByLetter[currentLine][currentLetterIndex].length) {
+        setCurrentLetterIndex(prevState => prevState + 1)
+        setCurrentInlineIndex(prevState => prevState + 1)
+
+        if (textSplitByLetter[currentLine][currentLetterIndex][0] === textSplitByLetter[currentLine][currentLetterIndex][1]
+          && displayTextSplitByLine[currentLine][currentDisplayIndex] === "っ") {
+          setCurrentDisplayIndex(prevState => prevState + 2)
+        } else {
+          setCurrentDisplayIndex(prevState => prevState + 1)
+        }
+
+        setCurrentAlphabetIndex(0)
+
+        if (currentLetterIndex + 1 >= textSplitByLetter[currentLine].length) {
+          setCurrentLine(prevState => prevState + 1)
+          setCurrentDisplayIndex(0)
+          setCurrentInlineIndex(0)
+          setCurrentLetterIndex(0)
+          
+          if (currentLine + 1 >= textSplitByLine.length) {
+            props.setIsFinished(true)
+            clearInterval(timerRef.current)
+          }
+        }
       }
     } else {
       setIsMissed(true)
@@ -57,16 +87,26 @@ export const TypingArea: React.FC<Props> = ({...props}) => {
   }
 
   return (
-    <div>
-      <div tabIndex={0} onKeyDown={(e) => handleKeyInput(e)} className="outline-none">
-        <TypedTextCorrect typedTextCorrect={toTypeText.slice(0,currentIndex)} />
+    <>
+      <div>
+        <TypedTextCorrect typedTextCorrect={displayTextSplitByLine[currentLine].slice(0, currentDisplayIndex)} />
         { isMissed ? (
-          <TypedTextMiss typedTextMiss={toTypeText[currentIndex]} />
+          <TypedTextMiss typedTextMiss={displayTextSplitByLine[currentLine][currentDisplayIndex]} />
         ) : (
-          <NowTypingText nowTypingText={toTypeText[currentIndex]} />
+          <NowTypingText nowTypingText={displayTextSplitByLine[currentLine][currentDisplayIndex]} />
         )
         }
-        <YetTypedText yetTypedText={toTypeText.slice(currentIndex + 1, toTypeText.length)} />
+        <YetTypedText yetTypedText={displayTextSplitByLine[currentLine].slice(currentDisplayIndex + 1, displayTextSplitByLine[currentLine].length)} />
+      </div>
+      <div tabIndex={0} onKeyDown={(e) => handleKeyInput(e)} className="inline outline-none">
+        <TypedTextCorrect typedTextCorrect={textSplitByLine[currentLine].slice(0, currentInlineIndex)} />
+        { isMissed ? (
+          <TypedTextMiss typedTextMiss={textSplitByLine[currentLine][currentInlineIndex]} />
+        ) : (
+          <NowTypingText nowTypingText={textSplitByLine[currentLine][currentInlineIndex]} />
+        )
+        }
+        <YetTypedText yetTypedText={textSplitByLine[currentLine].slice(currentInlineIndex + 1, textSplitByLine[currentLine].length)} />
       </div>
     </div>
   )
