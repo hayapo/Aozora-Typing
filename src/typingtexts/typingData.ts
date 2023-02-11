@@ -17,7 +17,7 @@ export const typingData: TypingDataType[] = [
     author: "夏目 漱石",
     kanjiText: "私はその人を常に先生と呼んでいた。だからここでもただ先生と書くだけで本名は打ち明けない。これは世間を憚かる遠慮というよりも、その方が私にとって自然だからである。私はその人の記憶を呼び起すごとに、すぐ「先生」といいたくなる。",
     hiraganaText: "わたしはそのひとをつねにせんせいとよんでいた。だからここでもただせんせいとかくだけでほんみょうはうちあけない。これはせけんをはばかるえんりょというよりも、そのほうがわたしにとってしぜんだからである。わたしはそのひとのきおくをよびおこすごとに、すぐ「せんせい」といいたくなる。",
-    wakatiRomajiText: "watasi ha so no hito wo tune ni sen sei to yo n de i ta . da ka ra ko ko de mo ta da sen sei to ka ku da ke de hon myou ha u ti a ke na i . ko re ha se ken wo haba karu en ryo to iu yo ri mo , so no hou ga watasi ni to tte si zen da ka ra de a ru . watasi ha so no hito no ki oku wo yo bi o ko su go to ni, su gu [ sen sei ] to i i ta ku na ru .",
+    wakatiRomajiText: "watasi ha so no hito wo tune ni sen sei to yo n de i ta . da ka ra ko ko de mo ta da sen sei to ka ku da ke de hon myou ha u ti a ke na i . ko re ha se ken wo haba ka ru en ryo to iu yo ri mo , so no hou ga watasi ni to tte si zen da ka ra de a ru . watasi ha so no hito no ki oku wo yo bi o ko su go to ni, su gu [ sen sei ] to i i ta ku na ru .",
     romajiText: "watasihasonohitowotunenisenseitoyondeita.dakarakokodemotadasenseitokakudakedehonmyouhautiakenai.korehasekenwohabakaruenryotoiuyorimo,sonohougawatasinitottesizendakaradearu.watasihasonohitonokiokuwoyobiokosugotoni,sugu[sensei]toiitakunaru.",
     url: "https://www.aozora.gr.jp/cards/000148/card773.html"
   },
