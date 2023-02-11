@@ -7,6 +7,7 @@ export const TypingTemplate: React.FC = () => {
   const [correctTypeAmount, setCorrectTypeAmount] = useState(0)
   const [allTypeAmount, setAllTypeAmount] = useState(0)
   const [typingDuration, setTypingDuration] = useState(0)
+  
   const typyingDurationSecond = typingDuration / 1000
   const accuracyRate = Math.floor(correctTypeAmount/allTypeAmount * 100)
   

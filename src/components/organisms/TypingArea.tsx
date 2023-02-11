@@ -22,6 +22,7 @@ export const TypingArea: React.FC<Props> = ({...props}) => {
   const [currentDataIndex, setCurrentDataIndex] = useState(0)
   const [isStarted, setIsStarted] = useState(false)
   const [isMissed, setIsMissed] = useState(false)
+
   const timerRef = useRef<number>(0)
 
   useEffect(() => {
@@ -107,6 +108,6 @@ export const TypingArea: React.FC<Props> = ({...props}) => {
         }
         <YetTypedText yetTypedText={textSplitByLine[currentLine].slice(currentInlineIndex + 1, textSplitByLine[currentLine].length)} />
       </div>
-    </>
+    </div>
   )
 }
