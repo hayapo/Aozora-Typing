@@ -1,4 +1,4 @@
-import { Text } from "../atoms/Text"
+import { SpanText } from "../atoms/SpanText"
 
 type Props = {
   typedTextMiss: string
@@ -7,7 +7,7 @@ type Props = {
 export const TypedTextMiss: React.FC<Props> = ({ typedTextMiss }) => {
   return (
     <div id="textbox" className="inline bg-gray-400 text-4xl text-red-400 ">
-      <Text text={typedTextMiss}/>
+      <SpanText text={typedTextMiss}/>
     </div>
   )
 }

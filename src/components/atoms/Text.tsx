@@ -4,8 +4,8 @@ type Props = {
 
 export const Text: React.FC<Props> = ({text}) => {
   return (
-    <span className="text-4xl">
+    <div className="text-4xl">
       {text}
-    </span>
+    </div>
   )
 }
