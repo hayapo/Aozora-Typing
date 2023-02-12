@@ -4,6 +4,7 @@ import { TypedTextMiss } from "../molecules/TypedTextMiss"
 import { YetTypedText } from "../molecules/YetTypedText"
 import { NowTypingText } from "../molecules/NowTypingText"
 import { typingData } from "../../typingtexts/typingData"
+import { WorkTitle } from "../molecules/WorkTitle"
 
 type Props = {
   isFinished: boolean,
@@ -87,26 +88,31 @@ export const TypingArea: React.FC<Props> = ({...props}) => {
   }
 
   return (
-    <>
-      <div>
-        <TypedTextCorrect typedTextCorrect={displayTextSplitByLine[currentLine].slice(0, currentDisplayIndex)} />
-        { isMissed ? (
-          <TypedTextMiss typedTextMiss={displayTextSplitByLine[currentLine][currentDisplayIndex]} />
-        ) : (
-          <NowTypingText nowTypingText={displayTextSplitByLine[currentLine][currentDisplayIndex]} />
-        )
-        }
-        <YetTypedText yetTypedText={displayTextSplitByLine[currentLine].slice(currentDisplayIndex + 1, displayTextSplitByLine[currentLine].length)} />
+    <div className="grid gap-y-[1rem]">
+      <div className="my-20 text-center">
+        <WorkTitle title={typeData.title} author={typeData.author} />
       </div>
-      <div tabIndex={0} onKeyDown={(e) => handleKeyInput(e)} className="inline outline-none">
-        <TypedTextCorrect typedTextCorrect={textSplitByLine[currentLine].slice(0, currentInlineIndex)} />
-        { isMissed ? (
-          <TypedTextMiss typedTextMiss={textSplitByLine[currentLine][currentInlineIndex]} />
-        ) : (
-          <NowTypingText nowTypingText={textSplitByLine[currentLine][currentInlineIndex]} />
-        )
-        }
-        <YetTypedText yetTypedText={textSplitByLine[currentLine].slice(currentInlineIndex + 1, textSplitByLine[currentLine].length)} />
+      <div className=" mx-20 min-h-screen flex-row items-center">
+        <div>
+          <TypedTextCorrect typedTextCorrect={displayTextSplitByLine[currentLine].slice(0, currentDisplayIndex)} />
+          { isMissed ? (
+            <TypedTextMiss typedTextMiss={displayTextSplitByLine[currentLine][currentDisplayIndex]} />
+          ) : (
+            <NowTypingText nowTypingText={displayTextSplitByLine[currentLine][currentDisplayIndex]} />
+          )
+          }
+          <YetTypedText yetTypedText={displayTextSplitByLine[currentLine].slice(currentDisplayIndex + 1, displayTextSplitByLine[currentLine].length)} />
+        </div>
+        <div tabIndex={0} onKeyDown={(e) => handleKeyInput(e)} className="outline-none">
+          <TypedTextCorrect typedTextCorrect={textSplitByLine[currentLine].slice(0, currentInlineIndex)} />
+          { isMissed ? (
+            <TypedTextMiss typedTextMiss={textSplitByLine[currentLine][currentInlineIndex]} />
+          ) : (
+            <NowTypingText nowTypingText={textSplitByLine[currentLine][currentInlineIndex]} />
+          )
+          }
+          <YetTypedText yetTypedText={textSplitByLine[currentLine].slice(currentInlineIndex + 1, textSplitByLine[currentLine].length)} />
+        </div>
       </div>
     </div>
   )
