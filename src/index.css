@@ -11,4 +11,6 @@ body {
   @apply m-0;
   @apply flex;
   @apply place-content-center;
+  @apply max-h-screen;
+  @apply overflow-hidden;
 }
