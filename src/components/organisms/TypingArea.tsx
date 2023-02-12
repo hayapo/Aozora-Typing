@@ -1,12 +1,13 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { TypedTextCorrect } from "../molecules/TypedTextCorrect"
 import { TypedTextMiss } from "../molecules/TypedTextMiss"
 import { YetTypedText } from "../molecules/YetTypedText"
 import { NowTypingText } from "../molecules/NowTypingText"
-import { typingData } from "../../typingtexts/typingData"
-import { WorkTitle } from "../molecules/WorkTitle"
+import { WorkTitleAuhtor } from "../molecules/WorkTitleAuhtor"
+import { TypingDataType } from "../../types/typingDataType"
 
 type Props = {
+  typeData: TypingDataType
   isFinished: boolean,
   setIsFinished: (isFinished: boolean) => void
   setCorrectTypeAmount: (correctTypeAmount: React.SetStateAction<number>) => void
@@ -20,23 +21,17 @@ export const TypingArea: React.FC<Props> = ({...props}) => {
   const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0)
   const [currentInlineIndex, setCurrentInlineIndex] = useState(0)
   const [currentDisplayIndex, setCurrentDisplayIndex] = useState(0)
-  const [currentDataIndex, setCurrentDataIndex] = useState(0)
   const [isStarted, setIsStarted] = useState(false)
   const [isMissed, setIsMissed] = useState(false)
-
+  
   const timerRef = useRef<number>(0)
+  
+  const typeText = props.typeData.wakatiRomajiText
 
-  useEffect(() => {
-    setCurrentDataIndex(Math.floor(Math.random() * typingData.length))
-  },[currentDataIndex])
-  
-  const typeData = typingData[currentDataIndex]
-  
-  const typeText = typeData.wakatiRomajiText
   const textSplitByLine = typeText.split(".").slice(0,-1).map((line) => line[0] === " " ? line.slice(1,-1) : line.slice(0,-1))
   const textSplitByLetter = textSplitByLine.map((line) => line.split(" ").filter(Boolean))
   
-  const displayText = typeData.kanjiText
+  const displayText = props.typeData.kanjiText
   const displayTextSplitByLine = displayText.split("。").slice(0,-1)
 
   const handleKeyInput = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -90,7 +85,7 @@ export const TypingArea: React.FC<Props> = ({...props}) => {
   return (
     <div className="grid gap-y-[1rem]">
       <div className="my-20 text-center">
-        <WorkTitle title={typeData.title} author={typeData.author} />
+        <WorkTitleAuhtor title={props.typeData.title} author={props.typeData.author} />
       </div>
       <div className=" mx-20 min-h-screen flex-row items-center">
         <div>

@@ -1,5 +1,5 @@
-import { TypingTemplate } from "./components/templates/TypingTemplate"
 import { Title } from "./components/atoms/Title"
+import { TypingPage } from "./components/page/TypingPage"
 
 function App() {
   const siteTitle= "Aozora Typing"
@@ -8,7 +8,7 @@ function App() {
       <div className="mt-4 flex justify-center">
         <Title titleText={siteTitle}/>
       </div>
-      <TypingTemplate />
+      <TypingPage />
     </>
   )
 }
