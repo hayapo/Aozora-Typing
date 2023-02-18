@@ -83,11 +83,11 @@ export const TypingArea: React.FC<Props> = ({...props}) => {
   }
 
   return (
-    <div className="grid gap-y-[1rem]">
-      <div className="my-20 text-center">
+    <div className="grid gap-y-20 md:my-[-15rem] ">
+      <div className="text-center">
         <WorkTitleAuhtor title={props.typeData.title} author={props.typeData.author} />
       </div>
-      <div className=" mx-20 min-h-screen flex-row items-center">
+      <div className="">
         <div>
           <TypedTextCorrect typedTextCorrect={displayTextSplitByLine[currentLine].slice(0, currentDisplayIndex)} />
           { isMissed ? (

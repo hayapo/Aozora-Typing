@@ -19,13 +19,7 @@ export const TypingPage: React.FC = () => {
   }, [])
 
   return (
-    <>
-      {/* <ResultTemplate
-        typeData={currentTypeData}
-        correctTypeAmount={correctTypeAmount}
-        allTypeAmount={allTypeAmount}
-        typingDuration={typingDuration}
-      /> */}
+    <div>
       {isFinished ? (
         <ResultTemplate
           typeData={currentTypeData}
@@ -44,6 +38,6 @@ export const TypingPage: React.FC = () => {
         />
       )
       }
-    </>
+    </div>
   )
 }
