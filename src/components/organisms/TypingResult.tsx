@@ -21,7 +21,7 @@ export const TypingResult: React.FC<Props> = ({
   return (
     <div className="mt-[7rem]">
       <div>
-        <div className="mb-10 text-6xl">
+        <div className="mb-10 text-center text-5xl font-bold">
           {"タイピング成績"}
         </div>
         <div className="ml-14">
@@ -39,7 +39,7 @@ export const TypingResult: React.FC<Props> = ({
           </div>
         </div>
       </div>
-      <div className="my-20 text-center">
+      <div className="my-20 grid gap-8 text-center">
         <WorkDetail title={typeData.title} author={typeData.author} url={typeData.url} />
       </div>
     </div>

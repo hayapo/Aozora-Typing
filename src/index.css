@@ -10,7 +10,7 @@
 body {
   @apply m-0;
   @apply flex;
+  @apply min-h-screen;
   @apply place-content-center;
-  @apply max-h-screen;
-  @apply overflow-hidden;
+  @apply place-items-center;
 }

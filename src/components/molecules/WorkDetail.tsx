@@ -6,11 +6,13 @@ type Props = {
   url: string
 }
 
-export const WorkDetail: React.FC<Props> = ({ title, author, url}) => {
+export const WorkDetail: React.FC<Props> = ({ title, author, url }) => {
+  const titleText = `作品: ${title}`
+  const authorText = `著者: ${author}`
   return (
     <div className="grid gap-y-10">
-      <Text text={title} />
-      <Text text={author} />
+      <Text text={titleText} />
+      <Text text={authorText} />
       <a
         href={url}
         rel="noopener"

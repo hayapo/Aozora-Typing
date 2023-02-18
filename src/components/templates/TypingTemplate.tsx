@@ -20,7 +20,7 @@ export const TypingTemplate: React.FC<Props> = ({
 }) => {
   return (
     <TypingArea
-      typeData={typeData}
+      typeData={ typeData }
       isFinished = { isFinished }
       setIsFinished = { setIsFinished }
       setCorrectTypeAmount = { setCorrectTypeAmount }
