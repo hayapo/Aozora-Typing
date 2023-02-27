@@ -1,31 +1,31 @@
-import { TypingDataType } from "../../types/typingDataType"
+import { WorkDetailType } from "../../types/workDetailType"
 import { TypingArea } from "../organisms/TypingArea"
 
 type Props = {
-  typeData: TypingDataType
   isFinished: boolean,
   setIsFinished: (isFinished: boolean) => void
   setCorrectTypeAmount: (correctTypeAmount: React.SetStateAction<number>) => void
   setAllTypeAmount: (allTypeAmount: React.SetStateAction<number>) => void
-  setTypingDuration: (typingDuration: number) => void
+  setTypingDuration: (typingDuration: React.SetStateAction<number>) => void
+  setWorkDetail: (workDetail: React.SetStateAction<WorkDetailType>) => void
 }
 
 export const TypingTemplate: React.FC<Props> = ({
-  typeData,
   isFinished,
   setIsFinished,
   setCorrectTypeAmount,
   setAllTypeAmount,
-  setTypingDuration
+  setTypingDuration,
+  setWorkDetail
 }) => {
   return (
     <TypingArea
-      typeData={ typeData }
-      isFinished = { isFinished }
-      setIsFinished = { setIsFinished }
-      setCorrectTypeAmount = { setCorrectTypeAmount }
-      setAllTypeAmount = { setAllTypeAmount }
-      setTypingDuration = { setTypingDuration }
+      isFinished={isFinished}
+      setIsFinished={setIsFinished}
+      setCorrectTypeAmount={setCorrectTypeAmount}
+      setAllTypeAmount={setAllTypeAmount}
+      setTypingDuration={setTypingDuration}
+      setWorkDetail={setWorkDetail}
     />
   )
 }

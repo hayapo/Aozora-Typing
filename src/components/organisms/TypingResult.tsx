@@ -1,19 +1,19 @@
-import { TypingDataType } from "../../types/typingDataType"
 import { WorkDetail } from "../molecules/WorkDetail"
 import { Text } from "../atoms/Text"
+import { WorkDetailType } from "../../types/workDetailType"
 
 type Props = {
-  typeData: TypingDataType
   correctTypeAmount: number
   allTypeAmount: number
   typingDuration: number
+  workDetail: WorkDetailType
 }
 
 export const TypingResult: React.FC<Props> = ({
-  typeData,
   correctTypeAmount,
   allTypeAmount,
-  typingDuration
+  typingDuration,
+  workDetail
 }) => {
   const typingDurationSecond = typingDuration / 1000
   const accuracyRate = Math.floor(correctTypeAmount/allTypeAmount * 100)
@@ -40,7 +40,7 @@ export const TypingResult: React.FC<Props> = ({
         </div>
       </div>
       <div className="my-20 grid gap-8 text-center">
-        <WorkDetail title={typeData.title} author={typeData.author} url={typeData.url} />
+        <WorkDetail workDetail={workDetail} />
       </div>
     </div>
   )

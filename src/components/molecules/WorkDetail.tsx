@@ -1,20 +1,19 @@
+import { WorkDetailType } from "../../types/workDetailType"
 import { Text } from "../atoms/Text"
 
 type Props = {
-  title: string
-  author: string
-  url: string
+  workDetail: WorkDetailType
 }
 
-export const WorkDetail: React.FC<Props> = ({ title, author, url }) => {
-  const titleText = `作品: ${title}`
-  const authorText = `著者: ${author}`
+export const WorkDetail: React.FC<Props> = ({ workDetail }) => {
+  const titleText = `作品: ${workDetail.title}`
+  const authorText = `著者: ${workDetail.author}`
   return (
     <div className="grid gap-y-10">
       <Text text={titleText} />
       <Text text={authorText} />
       <a
-        href={url}
+        href={workDetail.url}
         rel="noopener"
         className="text-blue-400 underline"
       >

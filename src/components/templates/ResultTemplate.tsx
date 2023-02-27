@@ -1,25 +1,25 @@
-import { TypingDataType } from "../../types/typingDataType"
+import { WorkDetailType } from "../../types/workDetailType"
 import { TypingResult } from "../organisms/TypingResult"
 
 type Props = {
-  typeData: TypingDataType
   correctTypeAmount: number
   allTypeAmount: number
-  typingDuration: number
+  typingDuration: number,
+  workDetail: WorkDetailType
 }
 
 export const ResultTemplate: React.FC<Props> = ({
-  typeData,
   correctTypeAmount,
   allTypeAmount,
-  typingDuration
+  typingDuration,
+  workDetail
 }) => {
   return (
-    <TypingResult 
-      typeData={typeData}
+    <TypingResult
       correctTypeAmount={correctTypeAmount}
       allTypeAmount={allTypeAmount}
       typingDuration={typingDuration}
+      workDetail={workDetail}
     />
   )
 }
