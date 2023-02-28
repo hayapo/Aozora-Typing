@@ -13,7 +13,8 @@ export type TypingResultType = {
   isFinished: boolean
   correctAmount: number
   allAmount: number
-  duration: number
+  startTime: number
+  finishTime: number
 }
 
 export type TypingStateType = {

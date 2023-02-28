@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, SetStateAction } from "react"
+import { useState, useEffect, SetStateAction } from "react"
 import { IoReload } from "react-icons/io5"
 import { TypedTextCorrect, TypedTextMiss, YetTypedText, NowTypingText, WorkTitleAuthor } from "../molecules"
 import { typingData } from "../../typingtexts/typingData"
@@ -24,8 +24,6 @@ export const TypingArea: React.FC<Props> = ({ typingResult, setTypingResult, set
     isStarted: false,
     isMissed: false,
   })
-
-  const timerRef = useRef<number>(0)
 
   useEffect(() => {
     const currentIndex = Math.floor(Math.random() * typingData.length)
@@ -75,7 +73,6 @@ export const TypingArea: React.FC<Props> = ({ typingResult, setTypingResult, set
           onKeyDown={(e) =>
             handleKeyInput(
               e,
-              timerRef.current,
               textSplitByLine,
               textSplitByLetter,
               displayTextSplitByLine,
@@ -111,7 +108,7 @@ export const TypingArea: React.FC<Props> = ({ typingResult, setTypingResult, set
           bg-gray-500
           hover:bg-gray-600
         "
-        onClick={() => RefreshAll(setTypingState, setTypingResult, timerRef.current)}
+        onClick={() => RefreshAll(setTypingState, setTypingResult)}
       >
         <IoReload className="mx-auto" />
       </button>

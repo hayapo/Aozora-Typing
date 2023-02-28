@@ -12,7 +12,7 @@ type Props = {
 }
 
 export const TypingResult: React.FC<Props> = ({ typingResult, setTypingResult, workDetail }) => {
-  const typingDurationSecond = typingResult.duration / 1000
+  const typingDurationSecond = (typingResult.finishTime - typingResult.startTime) / 1000
   const accuracyRate = Math.floor((typingResult.correctAmount / typingResult.allAmount) * 100)
 
   return (

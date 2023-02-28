@@ -7,7 +7,8 @@ export const TypingPage: React.FC = () => {
     isFinished: false,
     correctAmount: 0,
     allAmount: 0,
-    duration: 0,
+    startTime: 0,
+    finishTime: 0,
   })
   const [workDetail, setWorkDetail] = useState({
     title: "",
@@ -20,6 +21,7 @@ export const TypingPage: React.FC = () => {
       {typingResult.isFinished ? (
         <ResultTemplate typingResult={typingResult} setTypingResult={setTypingResult} workDetail={workDetail} />
       ) : (
+        // <ResultTemplate typingResult={typingResult} setTypingResult={setTypingResult} workDetail={workDetail} />
         <TypingTemplate typingResult={typingResult} setTypingResult={setTypingResult} setWorkDetail={setWorkDetail} />
       )}
     </div>

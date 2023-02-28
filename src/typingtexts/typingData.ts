@@ -1,4 +1,4 @@
-import { TypingDataType } from "../types/TypingDataType"
+import { TypingDataType } from "../types/TypingTypes"
 
 export const typingData: TypingDataType[] = [
   {
@@ -83,6 +83,17 @@ export const typingData: TypingDataType[] = [
       "あるひのくれがたのことである。ひとりのげにんが、らしょうもんのしたであまやみをまっていた。ひろいもんのしたには、このおとこのほかにだれもいない。ただ、ところどころにぬりのはげた、おおきなえんちゅうに、きりぎりすがいっぴきとまっている。らしょうもんが、すざくおおじにあるいじょうは、このおとこのほかにも、あまやみをするいちめがさやもみえぼしが、もう二三にんはありそうなものである。それが、このおとこのほかにはだれもいない。",
     romajiText:
       "aruhinokuregatanokotodearu.hitorinogeninga,rasyoumonnositadeamayamiwomatteita.hiroimonnositaniha,konootokonohokanidaremoinai.tada,tokorodokoroninurinohageta,ookinaentyuuni,kirigirisugaippikitomatteiru.rasyoumonga,suzakuooziniaruizyouha,konootokonohokanimo,amayamiwosuruitimegasayamomiebosiga,mounisannninhaarisounamonodearu.sorega,konootokonohokanihadaremoinai.",
+    url: "https://www.aozora.gr.jp/cards/000879/files/127_15260.html",
+  },
+  {
+    id: 122,
+    title: "らしょーもん",
+    author: "芥川 竜之介",
+    kanjiText: "ある日の暮方の事である。一人の下人が、羅生門の下で雨やみを待っていた。",
+    wakatiRomajiText:
+      "a ru hi no kure gata no koto de a ru . hito ri no ge nin ga , ra syou mon no sita de ama ya mi wo ma tte i ta .",
+    hiraganaText: "あるひのくれがたのことである。ひとりのげにんが、らしょうもんのしたであまやみをまっていた。",
+    romajiText: "aruhinokuregatanokotodearu.hitorinogeninga,rasyoumonnositadeamayamiwomatteita.",
     url: "https://www.aozora.gr.jp/cards/000879/files/127_15260.html",
   },
 ]
