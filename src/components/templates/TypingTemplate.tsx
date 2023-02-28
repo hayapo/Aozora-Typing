@@ -1,31 +1,14 @@
-import { WorkDetailType } from "../../types/workDetailType"
-import { TypingArea } from "../organisms/TypingArea"
+import { SetStateAction } from "react"
+import { TypingArea } from "../organisms"
+import { TypingResultType } from "../../types/TypingTypes"
+import { WorkDetailType } from "../../types/WorkDetailType"
 
 type Props = {
-  isFinished: boolean,
-  setIsFinished: (isFinished: boolean) => void
-  setCorrectTypeAmount: (correctTypeAmount: React.SetStateAction<number>) => void
-  setAllTypeAmount: (allTypeAmount: React.SetStateAction<number>) => void
-  setTypingDuration: (typingDuration: React.SetStateAction<number>) => void
-  setWorkDetail: (workDetail: React.SetStateAction<WorkDetailType>) => void
+  typingResult: TypingResultType
+  setTypingResult: React.Dispatch<SetStateAction<TypingResultType>>
+  setWorkDetail: React.Dispatch<SetStateAction<WorkDetailType>>
 }
 
-export const TypingTemplate: React.FC<Props> = ({
-  isFinished,
-  setIsFinished,
-  setCorrectTypeAmount,
-  setAllTypeAmount,
-  setTypingDuration,
-  setWorkDetail
-}) => {
-  return (
-    <TypingArea
-      isFinished={isFinished}
-      setIsFinished={setIsFinished}
-      setCorrectTypeAmount={setCorrectTypeAmount}
-      setAllTypeAmount={setAllTypeAmount}
-      setTypingDuration={setTypingDuration}
-      setWorkDetail={setWorkDetail}
-    />
-  )
+export const TypingTemplate: React.FC<Props> = ({ typingResult, setTypingResult, setWorkDetail }) => {
+  return <TypingArea typingResult={typingResult} setTypingResult={setTypingResult} setWorkDetail={setWorkDetail} />
 }

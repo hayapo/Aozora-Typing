@@ -1,35 +1,30 @@
-import { WorkDetail } from "../molecules/WorkDetail"
+import { SetStateAction } from "react"
+import { IoReload } from "react-icons/io5"
 import { Text } from "../atoms/Text"
-import { WorkDetailType } from "../../types/workDetailType"
+import { WorkDetail } from "../molecules"
+import { TypingResultType } from "../../types/TypingTypes"
+import { WorkDetailType } from "../../types/WorkDetailType"
 
 type Props = {
-  correctTypeAmount: number
-  allTypeAmount: number
-  typingDuration: number
+  typingResult: TypingResultType
+  setTypingResult: React.Dispatch<SetStateAction<TypingResultType>>
   workDetail: WorkDetailType
 }
 
-export const TypingResult: React.FC<Props> = ({
-  correctTypeAmount,
-  allTypeAmount,
-  typingDuration,
-  workDetail
-}) => {
-  const typingDurationSecond = typingDuration / 1000
-  const accuracyRate = Math.floor(correctTypeAmount/allTypeAmount * 100)
-  
+export const TypingResult: React.FC<Props> = ({ typingResult, setTypingResult, workDetail }) => {
+  const typingDurationSecond = typingResult.duration / 1000
+  const accuracyRate = Math.floor((typingResult.correctAmount / typingResult.allAmount) * 100)
+
   return (
     <div className="mt-[7rem]">
       <div>
-        <div className="mb-10 text-center text-5xl font-bold">
-          {"タイピング成績"}
-        </div>
+        <div className="mb-10 text-center text-5xl font-bold">{"タイピング成績"}</div>
         <div className="ml-14">
           <div>
-            <Text text={`Correct Type: ${correctTypeAmount.toString()}`} />
+            <Text text={`Correct Type: ${typingResult.correctAmount.toString()}`} />
           </div>
           <div>
-            <Text text={`All Type: ${allTypeAmount.toString()}`} />
+            <Text text={`All Type: ${typingResult.allAmount.toString()}`} />
           </div>
           <div>
             <Text text={`Accuracy Rate: ${accuracyRate.toString()}%`} />

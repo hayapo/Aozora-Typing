@@ -1,0 +1,6 @@
+export { NowTypingText } from "./NowTypingText"
+export { TypedTextCorrect } from "./TypedTextCorrect"
+export { TypedTextMiss } from "./TypedTextMiss"
+export { WorkDetail } from "./WorkDetail"
+export { WorkTitleAuthor } from "./WorkTitleAuthor"
+export { YetTypedText } from "./YetTypedText"

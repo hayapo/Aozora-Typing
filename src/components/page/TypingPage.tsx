@@ -1,38 +1,27 @@
-import { useState,  } from "react"
-import { TypingTemplate } from "../templates/TypingTemplate"
-import { ResultTemplate } from "../templates/ResultTemplate"
+import { useState } from "react"
+import { TypingTemplate, ResultTemplate } from "../templates"
+import { TypingResultType } from "../../types/TypingTypes"
 
 export const TypingPage: React.FC = () => {
-  const [isFinished, setIsFinished] = useState(false)
-  const [correctTypeAmount, setCorrectTypeAmount] = useState(0)
-  const [allTypeAmount, setAllTypeAmount] = useState(0)
-  const [typingDuration, setTypingDuration] = useState(0)
-  const [workDetail, setWorkDetail] = useState({ 
+  const [typingResult, setTypingResult] = useState<TypingResultType>({
+    isFinished: false,
+    correctAmount: 0,
+    allAmount: 0,
+    duration: 0,
+  })
+  const [workDetail, setWorkDetail] = useState({
     title: "",
     author: "",
-    url: ""
+    url: "",
   })
 
   return (
     <div>
-      {isFinished ? (
-        <ResultTemplate
-          correctTypeAmount={correctTypeAmount}
-          allTypeAmount={allTypeAmount}
-          typingDuration={typingDuration}
-          workDetail={workDetail}
-        />
+      {typingResult.isFinished ? (
+        <ResultTemplate typingResult={typingResult} setTypingResult={setTypingResult} workDetail={workDetail} />
       ) : (
-        <TypingTemplate
-          isFinished={isFinished}
-          setIsFinished={setIsFinished}
-          setCorrectTypeAmount={setCorrectTypeAmount}
-          setAllTypeAmount={setAllTypeAmount}
-          setTypingDuration={setTypingDuration}
-          setWorkDetail={setWorkDetail}
-        />
-      )
-      }
+        <TypingTemplate typingResult={typingResult} setTypingResult={setTypingResult} setWorkDetail={setWorkDetail} />
+      )}
     </div>
   )
 }

@@ -6,7 +6,7 @@ type Props = {
   author: string
 }
 
-export const WorkTitleAuhtor: React.FC<Props> = ({ title, author}) => {
+export const WorkTitleAuthor: React.FC<Props> = ({ title, author }) => {
   return (
     <div className="grid gap-y-10">
       <Title titleText={title} />
