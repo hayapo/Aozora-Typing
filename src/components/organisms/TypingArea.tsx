@@ -1,206 +1,102 @@
-import { useState, useRef, useEffect } from "react"
-import { typingData } from "../../typingtexts/typingData"
-import { TypedTextCorrect } from "../molecules/TypedTextCorrect"
-import { TypedTextMiss } from "../molecules/TypedTextMiss"
-import { YetTypedText } from "../molecules/YetTypedText"
-import { NowTypingText } from "../molecules/NowTypingText"
-import { WorkTitleAuhtor } from "../molecules/WorkTitleAuhtor"
-import { TypingDataType } from "../../types/typingDataType"
-import { WorkDetailType } from "../../types/workDetailType"
+import { useState, useRef, useEffect, SetStateAction } from "react"
 import { IoReload } from "react-icons/io5"
+import { TypedTextCorrect, TypedTextMiss, YetTypedText, NowTypingText, WorkTitleAuthor } from "../molecules"
+import { typingData } from "../../typingtexts/typingData"
+import { TypingStateType, TypingResultType } from "../../types/TypingTypes"
+import { WorkDetailType } from "../../types/WorkDetailType"
+import { RefreshAll } from "../../lib/util/RefreshAll"
+import { handleKeyInput } from "../../lib/util/HandleKeyInput"
 
 type Props = {
-  isFinished: boolean
-  setIsFinished: (isFinished: boolean) => void
-  setCorrectTypeAmount: (
-    correctTypeAmount: React.SetStateAction<number>
-  ) => void
-  setAllTypeAmount: (allTypeAmount: React.SetStateAction<number>) => void
-  setTypingDuration: (typingDuration: React.SetStateAction<number>) => void
-  setWorkDetail: (workDetail: WorkDetailType) => void
+  typingResult: TypingResultType
+  setTypingResult: React.Dispatch<SetStateAction<TypingResultType>>
+  setWorkDetail: React.Dispatch<SetStateAction<WorkDetailType>>
 }
 
-export const TypingArea: React.FC<Props> = ({
-  isFinished,
-  setIsFinished,
-  setCorrectTypeAmount,
-  setAllTypeAmount,
-  setTypingDuration,
-  setWorkDetail,
-}) => {
-  const initialIndex = 0
-  const [currentTypeData, setCurrentTypeData] = useState<TypingDataType>(
-    typingData[initialIndex]
-  )
-  const [currentLine, setCurrentLine] = useState(0)
-  const [currentLetterIndex, setCurrentLetterIndex] = useState(0)
-  const [currentAlphabetIndex, setCurrentAlphabetIndex] = useState(0)
-  const [currentInlineIndex, setCurrentInlineIndex] = useState(0)
-  const [currentDisplayIndex, setCurrentDisplayIndex] = useState(0)
-  const [isStarted, setIsStarted] = useState(false)
-  const [isMissed, setIsMissed] = useState(false)
+export const TypingArea: React.FC<Props> = ({ typingResult, setTypingResult, setWorkDetail }) => {
+  const [typingState, setTypingState] = useState<TypingStateType>({
+    typeData: typingData[0],
+    line: 0,
+    letterIndex: 0,
+    alphabetIndex: 0,
+    inlineIndex: 0,
+    displayIndex: 0,
+    isStarted: false,
+    isMissed: false,
+  })
 
   const timerRef = useRef<number>(0)
 
   useEffect(() => {
     const currentIndex = Math.floor(Math.random() * typingData.length)
-    setCurrentTypeData(typingData[currentIndex])
+    setTypingState((prev) => ({ ...prev, typeData: typingData[currentIndex] }))
     setWorkDetail({
       title: typingData[currentIndex].title,
       author: typingData[currentIndex].author,
       url: typingData[currentIndex].url,
     })
-  }, [currentTypeData])
+  }, [])
 
-  const typeText = currentTypeData.wakatiRomajiText
+  const typeText = typingState.typeData.wakatiRomajiText
 
   const textSplitByLine = typeText
     .split(".")
     .slice(0, -1)
     .map((line) => (line[0] === " " ? line.slice(1, -1) : line.slice(0, -1)))
-  const textSplitByLetter = textSplitByLine.map((line) =>
-    line.split(" ").filter(Boolean)
-  )
+  const textSplitByLetter = textSplitByLine.map((line) => line.split(" ").filter(Boolean))
 
-  const displayText = currentTypeData.kanjiText
+  const displayText = typingState.typeData.kanjiText
   const displayTextSplitByLine = displayText.split("。").slice(0, -1)
-
-  const refreshAll = () => {
-    setCurrentTypeData(
-      typingData[Math.floor(Math.random() * typingData.length)]
-    )
-    setCurrentLine(0)
-    setCurrentAlphabetIndex(0)
-    setCurrentLetterIndex(0)
-    setCurrentInlineIndex(0)
-    setCurrentDisplayIndex(0)
-    setIsStarted(false)
-    setIsMissed(false)
-
-    setIsFinished(false)
-    setCorrectTypeAmount(0)
-    setAllTypeAmount(0)
-    setTypingDuration(0)
-    clearInterval(timerRef.current)
-  }
-
-  const handleKeyInput = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (isFinished) return
-    if (!isStarted) {
-      setIsStarted(true)
-      const startTime = new Date().getTime()
-      timerRef.current = setInterval(() => {
-        setTypingDuration(new Date().getTime() - startTime)
-      }, 10)
-    }
-
-    setAllTypeAmount((prevState) => prevState + 1)
-
-    if (
-      e.key ===
-      textSplitByLetter[currentLine][currentLetterIndex][currentAlphabetIndex]
-    ) {
-      setIsMissed(false)
-      setCurrentAlphabetIndex((prevState) => prevState + 1)
-      setCurrentInlineIndex((prevState) => prevState + 1)
-      setCorrectTypeAmount((prevState) => prevState + 1)
-
-      if (
-        currentAlphabetIndex + 1 >=
-        textSplitByLetter[currentLine][currentLetterIndex].length
-      ) {
-        setCurrentLetterIndex((prevState) => prevState + 1)
-        setCurrentInlineIndex((prevState) => prevState + 1)
-
-        if (
-          textSplitByLetter[currentLine][currentLetterIndex][0] ===
-            textSplitByLetter[currentLine][currentLetterIndex][1] &&
-          displayTextSplitByLine[currentLine][currentDisplayIndex] === "っ"
-        ) {
-          setCurrentDisplayIndex((prevState) => prevState + 2)
-        } else {
-          setCurrentDisplayIndex((prevState) => prevState + 1)
-        }
-
-        setCurrentAlphabetIndex(0)
-
-        if (currentLetterIndex + 1 >= textSplitByLetter[currentLine].length) {
-          setCurrentLine((prevState) => prevState + 1)
-          setCurrentDisplayIndex(0)
-          setCurrentInlineIndex(0)
-          setCurrentLetterIndex(0)
-
-          if (currentLine + 1 >= textSplitByLine.length) {
-            setIsFinished(true)
-            clearInterval(timerRef.current)
-          }
-        }
-      }
-    } else {
-      setIsMissed(true)
-    }
-  }
 
   return (
     <div className="grid gap-y-20 md:my-[-15rem] ">
       <div className="text-center">
-        <WorkTitleAuhtor
-          title={currentTypeData.title}
-          author={currentTypeData.author}
-        />
+        <WorkTitleAuthor title={typingState.typeData.title} author={typingState.typeData.author} />
       </div>
       <div>
         <div>
           <TypedTextCorrect
-            typedTextCorrect={displayTextSplitByLine[currentLine].slice(
-              0,
-              currentDisplayIndex
-            )}
+            typedTextCorrect={displayTextSplitByLine[typingState.line].slice(0, typingState.displayIndex)}
           />
-          {isMissed ? (
-            <TypedTextMiss
-              typedTextMiss={
-                displayTextSplitByLine[currentLine][currentDisplayIndex]
-              }
-            />
+          {typingState.isMissed ? (
+            <TypedTextMiss typedTextMiss={displayTextSplitByLine[typingState.line][typingState.displayIndex]} />
           ) : (
-            <NowTypingText
-              nowTypingText={
-                displayTextSplitByLine[currentLine][currentDisplayIndex]
-              }
-            />
+            <NowTypingText nowTypingText={displayTextSplitByLine[typingState.line][typingState.displayIndex]} />
           )}
           <YetTypedText
-            yetTypedText={displayTextSplitByLine[currentLine].slice(
-              currentDisplayIndex + 1,
-              displayTextSplitByLine[currentLine].length
+            yetTypedText={displayTextSplitByLine[typingState.line].slice(
+              typingState.displayIndex + 1,
+              displayTextSplitByLine[typingState.line].length
             )}
           />
         </div>
         <div
           tabIndex={0}
-          onKeyDown={(e) => handleKeyInput(e)}
+          onKeyDown={(e) =>
+            handleKeyInput(
+              e,
+              timerRef.current,
+              textSplitByLine,
+              textSplitByLetter,
+              displayTextSplitByLine,
+              typingState,
+              typingResult,
+              setTypingState,
+              setTypingResult
+            )
+          }
           className="outline-none"
         >
-          <TypedTextCorrect
-            typedTextCorrect={textSplitByLine[currentLine].slice(
-              0,
-              currentInlineIndex
-            )}
-          />
-          {isMissed ? (
-            <TypedTextMiss
-              typedTextMiss={textSplitByLine[currentLine][currentInlineIndex]}
-            />
+          <TypedTextCorrect typedTextCorrect={textSplitByLine[typingState.line].slice(0, typingState.inlineIndex)} />
+          {typingState.isMissed ? (
+            <TypedTextMiss typedTextMiss={textSplitByLine[typingState.line][typingState.inlineIndex]} />
           ) : (
-            <NowTypingText
-              nowTypingText={textSplitByLine[currentLine][currentInlineIndex]}
-            />
+            <NowTypingText nowTypingText={textSplitByLine[typingState.line][typingState.inlineIndex]} />
           )}
           <YetTypedText
-            yetTypedText={textSplitByLine[currentLine].slice(
-              currentInlineIndex + 1,
-              textSplitByLine[currentLine].length
+            yetTypedText={textSplitByLine[typingState.line].slice(
+              typingState.inlineIndex + 1,
+              textSplitByLine[typingState.line].length
             )}
           />
         </div>
@@ -215,7 +111,7 @@ export const TypingArea: React.FC<Props> = ({
           bg-gray-500
           hover:bg-gray-600
         "
-        onClick={refreshAll}
+        onClick={() => RefreshAll(setTypingState, setTypingResult, timerRef.current)}
       >
         <IoReload className="mx-auto" />
       </button>

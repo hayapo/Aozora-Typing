@@ -1,25 +1,14 @@
-import { WorkDetailType } from "../../types/workDetailType"
-import { TypingResult } from "../organisms/TypingResult"
+import { SetStateAction } from "react"
+import { TypingResult } from "../organisms"
+import { TypingResultType } from "../../types/TypingTypes"
+import { WorkDetailType } from "../../types/WorkDetailType"
 
 type Props = {
-  correctTypeAmount: number
-  allTypeAmount: number
-  typingDuration: number,
+  typingResult: TypingResultType
+  setTypingResult: React.Dispatch<SetStateAction<TypingResultType>>
   workDetail: WorkDetailType
 }
 
-export const ResultTemplate: React.FC<Props> = ({
-  correctTypeAmount,
-  allTypeAmount,
-  typingDuration,
-  workDetail
-}) => {
-  return (
-    <TypingResult
-      correctTypeAmount={correctTypeAmount}
-      allTypeAmount={allTypeAmount}
-      typingDuration={typingDuration}
-      workDetail={workDetail}
-    />
-  )
+export const ResultTemplate: React.FC<Props> = ({ typingResult, setTypingResult, workDetail }) => {
+  return <TypingResult typingResult={typingResult} setTypingResult={setTypingResult} workDetail={workDetail} />
 }

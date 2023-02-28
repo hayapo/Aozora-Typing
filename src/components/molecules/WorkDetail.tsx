@@ -1,4 +1,4 @@
-import { WorkDetailType } from "../../types/workDetailType"
+import { WorkDetailType } from "../../types/WorkDetailType"
 import { Text } from "../atoms/Text"
 
 type Props = {
@@ -12,11 +12,7 @@ export const WorkDetail: React.FC<Props> = ({ workDetail }) => {
     <div className="grid gap-y-10">
       <Text text={titleText} />
       <Text text={authorText} />
-      <a
-        href={workDetail.url}
-        rel="noopener"
-        className="text-blue-400 underline"
-      >
+      <a href={workDetail.url} rel="noopener" className="text-blue-400 underline">
         青空文庫へのリンク
       </a>
     </div>
