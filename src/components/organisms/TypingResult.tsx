@@ -37,6 +37,21 @@ export const TypingResult: React.FC<Props> = ({ typingResult, setTypingResult, w
       <div className="my-20 grid gap-8 text-center">
         <WorkDetail workDetail={workDetail} />
       </div>
+      <button
+        className="
+          mx-auto
+          flex
+          h-10
+          w-10
+          items-center
+          rounded-lg
+          bg-gray-500
+          hover:bg-gray-600
+        "
+        onClick={() => setTypingResult((prev) => ({ ...prev, isFinished: false }))}
+      >
+        <IoReload className="mx-auto" />
+      </button>
     </div>
   )
 }
