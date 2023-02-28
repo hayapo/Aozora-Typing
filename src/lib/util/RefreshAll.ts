@@ -4,8 +4,7 @@ import { typingData } from "../../typingtexts/typingData"
 
 export const RefreshAll = (
   setTypingState: React.Dispatch<SetStateAction<TypingStateType>>,
-  setTypingResult: React.Dispatch<SetStateAction<TypingResultType>>,
-  currentTimerRef: number
+  setTypingResult: React.Dispatch<SetStateAction<TypingResultType>>
 ) => {
   setTypingState({
     typeData: typingData[Math.floor(Math.random() * typingData.length)],
@@ -22,8 +21,7 @@ export const RefreshAll = (
     isFinished: false,
     correctAmount: 0,
     allAmount: 0,
-    duration: 0,
+    startTime: 0,
+    finishTime: 0,
   })
-
-  clearInterval(currentTimerRef)
 }

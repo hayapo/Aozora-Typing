@@ -1,9 +1,8 @@
-import { SetStateAction } from "react"
+import React, { SetStateAction } from "react"
 import { TypingStateType, TypingResultType } from "../../types/TypingTypes"
 
 export const handleKeyInput = (
   e: React.KeyboardEvent<HTMLDivElement>,
-  currentTimerRef: number,
   textSplitByLine: string[],
   textSplitByLetter: string[][],
   displayTextSplitByLine: string[],
@@ -18,13 +17,10 @@ export const handleKeyInput = (
       ...prev,
       isStarted: true,
     }))
-    const startTime = new Date().getTime()
-    currentTimerRef = setInterval(() => {
-      setTypingResult((prev) => ({
-        ...prev,
-        duration: new Date().getTime() - startTime,
-      }))
-    }, 10)
+    setTypingResult((prev) => ({
+      ...prev,
+      startTime: new Date().getTime(),
+    }))
   }
 
   setTypingResult((prev) => ({
@@ -87,8 +83,8 @@ export const handleKeyInput = (
           setTypingResult((prev) => ({
             ...prev,
             isFinished: true,
+            finishTime: new Date().getTime(),
           }))
-          clearInterval(currentTimerRef)
         }
       }
     }
