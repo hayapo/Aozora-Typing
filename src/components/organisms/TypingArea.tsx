@@ -1,4 +1,4 @@
-import { useState, useEffect, SetStateAction } from "react"
+import { useState, useEffect, useRef, SetStateAction } from "react"
 import { IoReload } from "react-icons/io5"
 import { TypedTextCorrect, TypedTextMiss, YetTypedText, NowTypingText, WorkTitleAuthor } from "../molecules"
 import { typingData } from "../../typingtexts/typingData"
@@ -14,6 +14,7 @@ type Props = {
 }
 
 export const TypingArea: React.FC<Props> = ({ typingResult, setTypingResult, setWorkDetail }) => {
+  const typingElement = useRef<HTMLDivElement>(null)
   const [typingState, setTypingState] = useState<TypingStateType>({
     typeData: typingData[0],
     line: 0,
@@ -33,6 +34,9 @@ export const TypingArea: React.FC<Props> = ({ typingResult, setTypingResult, set
       author: typingData[currentIndex].author,
       url: typingData[currentIndex].url,
     })
+    if (typingElement.current) {
+      typingElement.current.focus()
+    }
   }, [])
 
   const typeText = typingState.typeData.wakatiRomajiText
@@ -69,6 +73,7 @@ export const TypingArea: React.FC<Props> = ({ typingResult, setTypingResult, set
           />
         </div>
         <div
+          ref={typingElement}
           tabIndex={0}
           onKeyDown={(e) =>
             handleKeyInput(
